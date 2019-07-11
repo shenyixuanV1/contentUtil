@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>内容检查工具组件</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+
+    <link rel="stylesheet" href="css/_reset.less">
+    <style type="text/css">
+        .wrap{
+            width:500px;
+            padding:20px;
+            border:1px solid #eee;
+            margin: 10px auto 0;
+            color:#333;
+            font-size: 14px;
+            overflow: hidden;
+        }
+        .gbk_box{
+            margin-top: 30px;
+        }
+        .gbk_box p{
+            line-height: 26px;
+        }
+        .inp{
+            margin: 10px 0;
+            padding:10px 8px;
+            display:inline-block;
+            width:390px;
+        }
+        .btn{
+            background-color: #5084cb;
+            color:#fff;
+            width:72px;
+            height:39px;
+            line-height: 40px;
+            display:inline-block;
+            text-align: center;
+        }
+        .btn:hover{background-color: #6a9ee6;}
+    </style>
+</head>
+    <body>
+    <div class="wrap">
+
+        <div class="sensitive_box">
+            <p>1、敏感字检查</p>
+            <input type="text" placeholder="请输入要检测的内容" class="inp sen_inp" />
+            <a href="javascript:;" class="btn sen_btn">确定</a>
+        </div> 
+
+        <div class="gbk_box">
+            <p>2、新闻详情页内容：gbk编码or乱码转码（仅限gbk编码的新闻哦！）<br>
+                示例：(1)http://dhxy.163.com/news/update/2019/01/23/19975_796908.html<br>
+                (2)https://my.163.com/news/news/20190116/16741_795904.html
+            </p>
+            <input type="text" placeholder="请输入要请求内容的链接" class="inp gbk_inp" />
+            <a href="javascript:;" class="btn gbk_btn">确定</a>
+            <div class="gbk_change_con"></div>
+        </div>
+    </div>
+      
+
+
+    <script charset="utf-8" src="http://res.nie.netease.com/comm/js/jquery(mixNIE).1.11.js"></script>
+    <script charset="utf-8" src="contentUtil.js"></script>
+    <script type="text/javascript">
+    nie.define(function(){
+        $('.sen_btn').on('click',function(){
+            var sen_con = $('.sen_inp').val();
+            //'输入要检测是否存在敏感字的内容','成功回调','失败回调'
+            contentUtil.sensitive({
+                text:sen_con,
+                product:"common"//默认搜索词库为common
+            },function(result){                
+                alert('您输入的内容涉及敏感词汇！');    
+                $('.sen_inp').val('');                
+
+            },function(result){
+                alert('您输入的内容没毛病。');
+            })
+        })
+
+        $('.gbk_btn').on('click',function(){
+            var gbk_con = $('.gbk_inp').val();
+            $('.gbk_change_con').html('');
+            
+            //'输入要转换的新闻链接','成功回调','失败回调'
+            contentUtil.news(gbk_con,function(result){  
+                var $data = $(result.data),
+                    con = $data.find('#NIE-art').html();     
+          
+                if(con){              
+                    $('.gbk_change_con').html(con);
+                }else{
+                    alert('请检查要读取的内容块！');
+                }
+                
+            },function(result){
+                alert(result.msg);
+                $('.gbk_change_con').html('');
+                $('.gbk_inp').val('');
+            })
+            
+        })
+    })
+    </script>
+    </body>
+</html>
