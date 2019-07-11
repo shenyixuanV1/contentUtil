@@ -13,9 +13,6 @@
 
 实例：[点它点他](http://test.nie.163.com/test_html/nie-js/nie-contentUtil/)
 
-### git地址
-
-[在此](https://git-wz.nie.netease.com/nie-js/nie-contentUtil)
 
 ### JS - 敏感词检测
 
