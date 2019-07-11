@@ -77,6 +77,6 @@ contentUtil.news(gbk_con,function(result){
 
 
 
-> 使用过程如有疑问请反馈 grp.wza@corp.netease.com
+> 使用过程如有疑问请反馈 903514282@qq.com
 
 
